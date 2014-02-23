@@ -8,6 +8,9 @@ github.  It has been rewritten in CoffeeScript.
 Users can click on a cell to toggle it "alive/dead".  The simulation runs
 with a 1.5 sec period.
 
+Try it out here:
+<http://ditrapani.info/sims/game-of-life/life.html>.
+
 Download ready-to-use zip from
 <http://ditrapani.info/sims/game-of-life.zip>.
 
