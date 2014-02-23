@@ -14,17 +14,12 @@ class Cell
     @state = state
     ljd.addClass(@div, state)
 
-  live: () ->
-    @setState('alive')
-
-  die: () ->
-    @setState('dead')
-
   toggle: () ->
     if @state == 'alive'
-      @die()
+      @setState('dead')
     else
-      @live()
+      @setState('alive')
+    null
 
   toString: () ->
     return 'Cell<' + @row + ' ' + @col + ' ' + @state + '>'
@@ -33,14 +28,14 @@ class Cell
 life = {}
 
 
-positionDict =
-  'tl': [-1,-1], 'tc': [-1, 0], 'tr': [-1, 1],
-  'ml': [ 0,-1],                'mr': [ 0, 1],
+life.positionDict =
+  'tl': [-1,-1], 'tc': [-1, 0], 'tr': [-1, 1]
+  'ml': [ 0,-1],                'mr': [ 0, 1]
   'bl': [ 1,-1], 'bc': [ 1, 0], 'br': [ 1, 1]
 
 
-getNeighbor = (cell, position, grid) ->
-  offsets = positionDict[position]
+life.getNeighbor = (cell, position, grid) ->
+  offsets = life.positionDict[position]
   rows = grid.length
   cols = grid[0].length
   row = (cell.row + offsets[0]) % rows
@@ -52,16 +47,12 @@ getNeighbor = (cell, position, grid) ->
   grid[row][col]
 
 
-getLiveNeighborsCount = (cell, grid) ->
+life.getLiveNeighborsCount = (cell, grid) ->
   neighbors = []
-  for pos, _ of positionDict
-    if getNeighbor(cell, pos, grid).state == 'alive'
+  for pos, _ of life.positionDict
+    if life.getNeighbor(cell, pos, grid).state == 'alive'
       neighbors.push true
   neighbors.length
-
-life.positionDict = positionDict
-life.getNeighbor = getNeighbor
-life.getLiveNeighborsCount = getLiveNeighborsCount
 
 
 life.makeGrid = (size) ->
@@ -110,8 +101,8 @@ life.main = () ->
   life.grid = life.makeGrid(size)
   g = life.grid
   life.makeDivGrid(g)
-  for pos, _ of positionDict
-    getNeighbor(g[0][0], pos, g).setState('alive')
+  for pos, _ of life.positionDict
+    life.getNeighbor(g[0][0], pos, g).setState('alive')
   for i in [0...size]
     if i < 40 && i > 10
       g[10][i].setState('alive')

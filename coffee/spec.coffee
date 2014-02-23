@@ -18,14 +18,14 @@ test 'Make cell', ->
   equal c.state, 'dead'
 
 
-test 'setState, live, die, toggle, onclick', ->
+test 'setState, toggle, onclick', ->
   c = @c
   check = (func, state) ->
-    c[func]()
+    c[func](state)
     equal c.state, state
     equal c.div.className, 'cell ' + state
-  check('live', 'alive')
-  check('die', 'dead')
+  check('setState', 'alive')
+  check('setState', 'dead')
   check('toggle', 'alive')
   check('toggle', 'dead')
   div = c.div
