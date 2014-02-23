@@ -93,3 +93,16 @@ test 'getLiveNeighborsCount', ->
   equal life.getLiveNeighborsCount(c, grid), 5
 
 
+test 'makeGrid', ->
+  grid = life.makeGrid(3)
+  equal grid.length, 3
+  equal grid[0].length, 3
+  equal grid[1][2].toString(), 'Cell<1 2 dead>'
+  equal grid[2][0].toString(), 'Cell<2 0 dead>'
+
+
+test 'makeDivGrid', ->
+  grid = life.makeGrid(3)
+  life.makeDivGrid(grid)
+  ok ljd.$('grid')
+

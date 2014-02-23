@@ -64,40 +64,63 @@ life.getNeighbor = getNeighbor
 life.getLiveNeighborsCount = getLiveNeighborsCount
 
 
-
-###
-life.makeGrid = ->
+life.makeGrid = (size) ->
   makeCell = (i, j) ->
-    new Cell(i, j, 'dead')
-
+    new Cell(i, j)
   makeRow = (i) ->
-    row = (makeCell(i, j) for j in [0...Cell::max])
-    i / 2
-  grid = (makeRow(i) for i in [0...Cell::max])
+    row = (makeCell(i, j) for j in [0...size])
+  (makeRow(i) for i in [0...size])
+
+
+life.makeDivGrid = (grid) ->
+  makeDivRow = (row) ->
+    divRow = (cell.div for cell in row)
+    ljd.create('div', {'className': 'row'}, divRow)
+  divGrid = (makeDivRow(row) for row in grid)
   ljd.$('grid', divGrid)
-  Cell.grid = grid
 
 
-life.makeGrid = ->
-    grid = []
-    divGrid = []
-    grid = makeRow(i) for i in [0..Cell::max]
-        row = []
-        divRow = []
-        for
-        for(j = 0; j < Cell.max; j++) {
-            id = 'r' + i + 'c' + j
-            cell = create('div', {'className':'cell dead', 'id':id}, [])
-            cell.onclick = life.click
-            divRow.push(cell)
-            row.push(new Cell(i, j, cell, 'dead'))
-        }
-        divGrid.push(create('div', {'className':'row'}, divRow))
-        grid.push(row)
-    }
-    $('grid', divGrid)
-    Cell.grid = grid
-    ###
+life.iterate = () ->
+  for row in life.grid
+    for cell in row
+      count = life.getLiveNeighborsCount(cell, life.grid)
+      cell.nextState = if count == 3
+        'alive'
+      else if count == 2
+        cell.state
+      else
+        'dead'
+  for row in life.grid
+    for cell in row
+      cell.setState(cell.nextState)
+
+
+life.start = () ->
+  life.id = setInterval(life.iterate, 1500)
+
+
+life.stop = () ->
+  clearInterval(life.id)
+
+
+life.main = () ->
+  size = 50
+  life.grid = life.makeGrid(size)
+  g = life.grid
+  life.makeDivGrid(g)
+  for pos, _ of positionDict
+    getNeighbor(g[0][0], pos, g).setState('alive')
+  for i in [0...size]
+    if i < 40 && i > 10
+      g[10][i].setState('alive')
+      g[25][i].setState('alive')
+      g[40][i].setState('alive')
+      g[i][10].setState('alive')
+      g[i][25].setState('alive')
+      g[i][40].setState('alive')
+  ljd.$('startButton').onclick = life.start
+  ljd.$('stopButton').onclick = life.stop
+
 
 ljd.Cell = Cell
 ljd.life = life
