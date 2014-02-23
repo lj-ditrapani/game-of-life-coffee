@@ -104,5 +104,10 @@ test 'makeGrid', ->
 test 'makeDivGrid', ->
   grid = life.makeGrid(3)
   life.makeDivGrid(grid)
-  ok ljd.$('grid')
+  g = ljd.$('grid')
+  rows = g.children
+  equal rows.length, 3
+  cells = rows[0].children
+  equal cells.length, 3
+  equal cells[0].className, 'cell dead'
 
