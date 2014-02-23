@@ -9,10 +9,31 @@ life = ljd.life
 
 
 test 'Make cell', ->
-  c = new Cell(2, 3, null, 'dead')
+  c = new Cell(2, 3, 'dead')
   equal c.row, 2
   equal c.col, 3
   equal c.state, 'dead'
+
+
+test 'setState, live, die, toggle, onclick', ->
+  c = new Cell(2, 3, 'dead')
+  check = (func, state) ->
+    c[func]()
+    equal c.state, state
+    equal c.div.className, 'cell ' + state
+  check('live', 'alive')
+  check('die', 'dead')
+  check('toggle', 'alive')
+  check('toggle', 'dead')
+  div = c.div
+  div.onclick()
+  equal c.state, 'alive'
+  equal c.div.className, 'cell alive'
+
+
+test 'toString', ->
+  c = new Cell(2, 3, 'dead')
+  equal c.toString(), 'Cell<2 3 dead>'
 
 
 
@@ -59,7 +80,13 @@ test 'getNeighbor', ->
   runTests(2, 1, tests)
 
 
-
-
+test 'getLiveNeighborsCount', ->
+  grid = [
+    [{state: 'alive'}, {state: 'dead'}, {state: 'alive'}]
+    [{state: 'dead'}, {state: 'alive'}, {state: 'dead'}]
+    [{state: 'dead'}, {state: 'alive'}, {state: 'alive'}]
+  ]
+  c = new Cell(1, 2, 'dead')
+  equal life.getLiveNeighborsCount(c, grid), 5
 
 

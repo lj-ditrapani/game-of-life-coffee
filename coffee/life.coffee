@@ -1,20 +1,33 @@
 class Cell
-  constructor: (row, col, div, state) ->
+
+  constructor: (row, col, state) ->
     @row = row
     @col = col
-    @div = div
     @state = state
+    @div = ljd.create('div', {'className': 'cell dead'}, [])
+    click = () =>
+      @toggle()
+    @div.onclick = click
 
-###
-Cell.prototype.setState = function(state) {
-    removeClass(this.div, this.state)
-    this.state = state
-    addClass(this.div, state)
-}
-Cell.prototype.toString = function() {
-    return '' + this.row + ' ' + this.col + ' ' + this.state
-}
-###
+  setState: (state) ->
+    ljd.removeClass(@div, @state)
+    @state = state
+    ljd.addClass(@div, state)
+
+  live: () ->
+    @setState('alive')
+
+  die: () ->
+    @setState('dead')
+
+  toggle: () ->
+    if @state == 'alive'
+      @die()
+    else
+      @live()
+
+  toString: () ->
+    return 'Cell<' + @row + ' ' + @col + ' ' + @state + '>'
 
 
 life = {}
@@ -39,12 +52,17 @@ getNeighbor = (cell, position, grid) ->
   grid[row][col]
 
 
+getLiveNeighborsCount = (cell, grid) ->
+  neighbors = []
+  for pos, _ of positionDict
+    if getNeighbor(cell, pos, grid).state == 'alive'
+      neighbors.push true
+  neighbors.length
+
 life.positionDict = positionDict
 life.getNeighbor = getNeighbor
+life.getLiveNeighborsCount = getLiveNeighborsCount
 
-getLiveNeighbors: (grid) ->
-  a = (true for pos, _ of Cell::positionDict when @getNeighbor(pos, grid).state == 'alive')
-  return a.length
 
 
 ###
@@ -71,7 +89,7 @@ life.makeGrid = ->
     grid = makeRow(i) for i in [0..Cell::max]
         row = []
         divRow = []
-        for 
+        for
         for(j = 0; j < Cell.max; j++) {
             id = 'r' + i + 'c' + j
             cell = create('div', {'className':'cell dead', 'id':id}, [])
