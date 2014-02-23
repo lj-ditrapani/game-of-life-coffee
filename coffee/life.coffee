@@ -1,9 +1,9 @@
 class Cell
 
-  constructor: (row, col, state) ->
+  constructor: (row, col) ->
     @row = row
     @col = col
-    @state = state
+    @state = 'dead'
     @div = ljd.create('div', {'className': 'cell dead'}, [])
     click = () =>
       @toggle()
@@ -67,13 +67,8 @@ life.getLiveNeighborsCount = getLiveNeighborsCount
 
 ###
 life.makeGrid = ->
-  divGrid = []
-  makeCell = (i, j, divRow) ->
-    id = 'r' + i + 'c' + j
-    cell = ljd.create('div', {'className': 'cell dead', 'id': id}, [])
-    cell.onclick = life.click
-    divRow.push(cell)
-    row.push(new Cell(i, j, cell, 'dead'))
+  makeCell = (i, j) ->
+    new Cell(i, j, 'dead')
 
   makeRow = (i) ->
     row = (makeCell(i, j) for j in [0...Cell::max])

@@ -1,7 +1,10 @@
 # Author:  Lyall Jonathan Di Trapani -----------------------------------
 
 
-module 'cell'
+module 'cell', {
+  setup: () ->
+    @c = new Cell(2, 3)
+}
 
 
 Cell = ljd.Cell
@@ -9,14 +12,14 @@ life = ljd.life
 
 
 test 'Make cell', ->
-  c = new Cell(2, 3, 'dead')
+  c = @c
   equal c.row, 2
   equal c.col, 3
   equal c.state, 'dead'
 
 
 test 'setState, live, die, toggle, onclick', ->
-  c = new Cell(2, 3, 'dead')
+  c = @c
   check = (func, state) ->
     c[func]()
     equal c.state, state
@@ -32,7 +35,7 @@ test 'setState, live, die, toggle, onclick', ->
 
 
 test 'toString', ->
-  c = new Cell(2, 3, 'dead')
+  c = @c
   equal c.toString(), 'Cell<2 3 dead>'
 
 
@@ -53,7 +56,7 @@ test 'getNeighbor', ->
     [6, 7, 8]
   ]
   runTests = (row, col, tests) ->
-    c = new Cell(row, col, null, 'dead')
+    c = new Cell(row, col)
     for [pos, val] in tests
       equal life.getNeighbor(c, pos, grid), val
   tests = [
@@ -86,7 +89,7 @@ test 'getLiveNeighborsCount', ->
     [{state: 'dead'}, {state: 'alive'}, {state: 'dead'}]
     [{state: 'dead'}, {state: 'alive'}, {state: 'alive'}]
   ]
-  c = new Cell(1, 2, 'dead')
+  c = new Cell(1, 2)
   equal life.getLiveNeighborsCount(c, grid), 5
 
 
