@@ -68,7 +68,7 @@ life.makeGrid = (size) ->
   makeCell = (i, j) ->
     new Cell(i, j)
   makeRow = (i) ->
-    row = (makeCell(i, j) for j in [0...size])
+    (new Cell(i, j) for j in [0...size])
   (makeRow(i) for i in [0...size])
 
 
@@ -93,10 +93,12 @@ life.iterate = () ->
   for row in life.grid
     for cell in row
       cell.setState(cell.nextState)
+  null
 
 
 life.start = () ->
   life.id = setInterval(life.iterate, 1500)
+  null
 
 
 life.stop = () ->
@@ -120,6 +122,7 @@ life.main = () ->
       g[i][40].setState('alive')
   ljd.$('startButton').onclick = life.start
   ljd.$('stopButton').onclick = life.stop
+  null
 
 
 ljd.Cell = Cell
