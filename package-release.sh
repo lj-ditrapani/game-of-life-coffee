@@ -4,6 +4,6 @@
 
 coffeelint coffee/*.coffee
 coffee -o js -c coffee/life.coffee
-rm -f life.zip
-zip life.zip js/ljd-utils.js js/life.js css/life.css \
+rm -f game-of-life.zip
+zip game-of-life.zip js/ljd-utils.js js/life.js css/life.css \
     life.html README.markdown

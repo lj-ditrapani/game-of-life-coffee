@@ -3,9 +3,4 @@
 /lib/qunit.js
 /js/ljd-utils.js
 /js/life.js
-/life.zip
-
-# Remove these when finished
-utils.back.js
-life.back.js
-cell.back.js
+/game-of-life.zip
