@@ -2,6 +2,8 @@
 /lib/qunit.css
 /lib/qunit.js
 /js/ljd-utils.js
+/js/cell.js
+/js/life.js
 /life.zip
 
 # Remove these when finished
