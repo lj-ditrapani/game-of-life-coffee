@@ -56,8 +56,6 @@ life.getLiveNeighborsCount = (cell, grid) ->
 
 
 life.makeGrid = (size) ->
-  makeCell = (i, j) ->
-    new Cell(i, j)
   makeRow = (i) ->
     (new Cell(i, j) for j in [0...size])
   (makeRow(i) for i in [0...size])
