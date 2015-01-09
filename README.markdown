@@ -23,6 +23,12 @@ Development requires CoffeeScript and qUnit.
 TODO
 ----
 
+- BUG:  pressing start multiple times creates multiple calls to
+  setInterval, but each call overwrites the life.id used to clear the
+  interval.  So it is impossible to stop the iterations.
+  Fix:  Have a single button. Initially, it is the start button.
+  Once pressed, it toggles to the stop buton and so on.
+  Could be a 'Run' check box?
 - Use table layout css
 - Separate out init game code
 - Allow user to chose initial game state from list
