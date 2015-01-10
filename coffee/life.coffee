@@ -1,3 +1,6 @@
+# Author:  Lyall Jonathan Di Trapani -----------------------------------
+
+
 class Cell
 
   constructor: (row, col) ->
@@ -19,7 +22,6 @@ class Cell
       @setState('dead')
     else
       @setState('alive')
-    null
 
   toString: () ->
     return 'Cell<' + @row + ' ' + @col + ' ' + @state + '>'
@@ -82,14 +84,13 @@ iterate = () ->
   for row in life.grid
     for cell in row
       cell.setState(cell.nextState)
-  null
+  return
 
 
 start = () ->
   ljd.$('startButton').disabled = true
   life.id = setInterval(iterate, 1500)
   ljd.$('stopButton').disabled = false
-  null
 
 
 stop = () ->
@@ -115,7 +116,6 @@ life.main = () ->
       g[i][40].setState('alive')
   ljd.$('startButton').onclick = start
   ljd.$('stopButton').onclick = stop
-  null
 
 
 ljd.Cell = Cell
