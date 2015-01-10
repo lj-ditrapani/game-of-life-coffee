@@ -69,7 +69,7 @@ life.makeDivGrid = (grid) ->
   ljd.$('grid', divGrid)
 
 
-life.iterate = () ->
+iterate = () ->
   for row in life.grid
     for cell in row
       count = life.getLiveNeighborsCount(cell, life.grid)
@@ -85,14 +85,14 @@ life.iterate = () ->
   null
 
 
-life.start = () ->
+start = () ->
   ljd.$('startButton').disabled = true
-  life.id = setInterval(life.iterate, 1500)
+  life.id = setInterval(iterate, 1500)
   ljd.$('stopButton').disabled = false
   null
 
 
-life.stop = () ->
+stop = () ->
   ljd.$('stopButton').disabled = true
   clearInterval(life.id)
   ljd.$('startButton').disabled = false
@@ -113,8 +113,8 @@ life.main = () ->
       g[i][10].setState('alive')
       g[i][25].setState('alive')
       g[i][40].setState('alive')
-  ljd.$('startButton').onclick = life.start
-  ljd.$('stopButton').onclick = life.stop
+  ljd.$('startButton').onclick = start
+  ljd.$('stopButton').onclick = stop
   null
 
 
