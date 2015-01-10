@@ -86,12 +86,16 @@ life.iterate = () ->
 
 
 life.start = () ->
+  ljd.$('startButton').disabled = true
   life.id = setInterval(life.iterate, 1500)
+  ljd.$('stopButton').disabled = false
   null
 
 
 life.stop = () ->
+  ljd.$('stopButton').disabled = true
   clearInterval(life.id)
+  ljd.$('startButton').disabled = false
 
 
 life.main = () ->
